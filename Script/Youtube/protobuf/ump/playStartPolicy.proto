@@ -1,0 +1,15 @@
+syntax = "proto3";
+package youtube.ump.playbackStartPolicy;
+
+message PlaybackStartPolicy {
+  repeated MinReadAheadPolicy startMinReadAheadPolicy = 1;
+  repeated MinReadAheadPolicy resumeMinReadAheadPolicy = 2;
+  string videoId = 3;
+  int32 startTimeoutMs = 4;
+  int32 resumeTimeoutMs = 5;
+}
+
+message MinReadAheadPolicy {
+  int64 minBandwidthBytesPerSec = 1;
+  int32 minReadAheadMs = 2;
+}

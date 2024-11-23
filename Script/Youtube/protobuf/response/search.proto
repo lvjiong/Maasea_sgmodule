@@ -1,6 +1,6 @@
 syntax = "proto3";
 package youtube.response.search;
-import "response/browse.proto";
+import "protobuf/response/browse.proto";
 
 message Search{
   youtube.response.browse.Contents contents = 4;

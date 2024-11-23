@@ -1,0 +1,14 @@
+syntax = "proto3";
+package youtube.ump.encrypted;
+
+message EncryptedInnertubeResponsePart {
+  bytes encryptedContent = 1;
+  bytes hmac = 2;
+  bytes iv = 3;
+  CompressionAlgorithm compressionAlgorithm = 4;
+}
+enum CompressionAlgorithm {
+  NONE = 0;
+  GZIP = 1;
+  BROTLI = 2;
+}

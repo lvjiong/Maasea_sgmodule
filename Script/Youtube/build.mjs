@@ -14,11 +14,11 @@ esbuild.buildSync({
 })
 
 esbuild.buildSync({
-  entryPoints: ['main-request.ts'],
+  entryPoints: ['./src/initplayback.ts'],
   bundle: true,
   minify: !debug,
   banner: { js: `// Build: ${now}` },
   inject: ['./lib/text-polyfill.mjs'],
   sourcemap: false,
-  outfile: './dist/youtube.request.preview.js',
+  outfile: './dist/youtube.ump.preview.js',
 })

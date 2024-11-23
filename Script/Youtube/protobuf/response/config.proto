@@ -1,0 +1,32 @@
+syntax = "proto3";
+package youtube.response.config;
+
+message Config{
+  ResponseContext response_context = 1;
+}
+message ResponseContext{
+  GlobalConfigGroup globalConfigGroup = 16;
+}
+
+message GlobalConfigGroup{
+  ColdConfigGroup coldConfigGroup = 6;
+  HotConfigGroup hotConfigGroup = 7;
+  optional string hot_hash_data = 4;
+  optional string cold_hash_data = 5;
+}
+
+message ColdConfigGroup{
+
+}
+message HotConfigGroup{
+  MediaHotConfig mediaHotConfig = 138536474;
+}
+message MediaHotConfig{
+  OnesieHotConfig onesieHotConfig = 146311580;
+}
+message OnesieHotConfig{
+  bytes clientKey = 1;
+  bytes encryptKey = 2;
+  int64 keyExpiresInSeconds = 3;
+  bool useHotConfigToCreateOnesieRequest = 30;
+}

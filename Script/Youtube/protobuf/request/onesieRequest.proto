@@ -1,0 +1,19 @@
+syntax = "proto3";
+package youtube.request.onesieRequestProto;
+
+message OnesieRequestProto {
+  repeated string urls = 1;
+  EncryptedInnertubeRequest innertube_request = 3;
+  bytes onesie_ustreamer_config = 4;
+  int32 max_vp9_height = 5;
+  int32 client_display_height = 6;
+}
+
+message EncryptedInnertubeRequest {
+  bytes encrypted_onesie_innertube_request = 2;
+  bytes encrypted_client_key = 5;
+  bytes iv = 6;
+  bytes hmac = 7;
+  bool enable_compression = 8;
+  string reverse_proxy_config = 9;
+}

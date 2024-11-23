@@ -7,7 +7,7 @@ import {
   GuideMessage,
   SettingMessage,
   WatchMessage
-} from '../src/responseHandler'
+} from '../src/response'
 import { YouTubeMessage } from '../src/youtube'
 
 const messages = new Map<string, new () => YouTubeMessage>([

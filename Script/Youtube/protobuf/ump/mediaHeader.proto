@@ -1,0 +1,33 @@
+syntax = "proto3";
+package youtube.ump.mediaHeader;
+
+message MediaHeader {
+  uint32 headerId = 1;
+  string videoId = 2;
+  int32 iTag = 3;
+  uint64 lastModified = 4;
+  string xTags = 5;
+  int64 startRange = 6;
+  CompressionAlgorithm compressionAlgorithm = 7;
+  bool isInitSegment = 8;
+  int64 sequenceNumber = 9;
+  FormatId formatId = 13;
+  int64 length = 14;
+  TimeRange timeRange = 15;
+}
+
+enum CompressionAlgorithm {
+  NONE = 0;
+  NONE_1 = 1;
+  GZIP = 2;
+}
+message TimeRange {
+  int64 start_ticks = 1;
+  int64 duration_ticks = 2;
+  int32 timescale = 3;
+}
+message FormatId {
+  int32 iTag = 1;
+  uint64 lastModified = 2;
+  string xTags = 3;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package youtube.ump.onesieHeader;
+
+message OnesieHeader{
+  int32 type = 1;
+//  string videoId = 2;
+//  string iTag = 3;
+//  uint64 lastModified = 5;
+//  int64 expectedMediaSizeBytes = 7;
+//  repeated string restrictedFormats = 11;
+//  string xTags = 15;
+}

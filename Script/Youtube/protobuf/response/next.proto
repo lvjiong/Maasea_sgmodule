@@ -1,7 +1,7 @@
 syntax = "proto3";
 package youtube.response.next;
-import "response/browse.proto";
-import "response/frameworkUpdate.proto";
+import "protobuf/response/browse.proto";
+import "protobuf/response/frameworkUpdate.proto";
 
 message Next{
   Contents Contents = 7;

@@ -1,0 +1,7 @@
+syntax = "proto3";
+package youtube.ump.encrypted;
+import "protobuf/response/watch.proto";
+
+message OnesieInnertubeResponse{
+  repeated youtube.response.watch.Content contents = 4;
+}

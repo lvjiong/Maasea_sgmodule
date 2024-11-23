@@ -1,6 +1,7 @@
 syntax = "proto3";
 package youtube.response.browse;
-import "response/frameworkUpdate.proto";
+import "protobuf/response/frameworkUpdate.proto";
+import "protobuf/response/config.proto";
 
 message Browse{
   ResponseContext responseContext = 1;
@@ -10,6 +11,7 @@ message Browse{
 }
 message ResponseContext{
   repeated ServiceTrackingParams serviceTrackingParams = 6;
+  youtube.response.config.GlobalConfigGroup globalConfigGroup = 16;
 }
 message ServiceTrackingParams{
   int32 service = 1;

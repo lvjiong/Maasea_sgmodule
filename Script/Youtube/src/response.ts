@@ -1,19 +1,21 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Browse } from '../lib/protobuf/response/browse_pb'
-import { Next } from '../lib/protobuf/response/next_pb'
-import { Search } from '../lib/protobuf/response/search_pb'
-import { Shorts } from '../lib/protobuf/response/shorts_pb'
-import { Guide } from '../lib/protobuf/response/guide_pb'
-import { Player, BackgroundPlayer, TranslationLanguage, CaptionTrack } from '../lib/protobuf/response/player_pb'
-import { Setting, SubSetting, SettingItem } from '../lib/protobuf/response/setting_pb'
-import { Watch } from '../lib/protobuf/response/watch_pb'
+import { Browse } from '../lib/protobuf/response/browse_pb.js'
+import { Next } from '../lib/protobuf/response/next_pb.js'
+import { Search } from '../lib/protobuf/response/search_pb.js'
+import { Shorts } from '../lib/protobuf/response/shorts_pb.js'
+import { Guide } from '../lib/protobuf/response/guide_pb.js'
+import { Player, BackgroundPlayer, TranslationLanguage, CaptionTrack } from '../lib/protobuf/response/player_pb.js'
+import { Setting, SubSetting, SettingItem } from '../lib/protobuf/response/setting_pb.js'
+import { Watch } from '../lib/protobuf/response/watch_pb.js'
 
 import { YouTubeMessage } from './youtube'
 import { $ } from '../lib/env'
 import { translateURL } from '../lib/googleTranslate'
-import { Entity } from '../lib/protobuf/response/frameworkUpdate_pb'
+import { Entity } from '../lib/protobuf/response/frameworkUpdate_pb.js'
 import { protoBase64 } from '@bufbuild/protobuf'
+import { GlobalConfigGroup } from '../lib/protobuf/response/config_pb'
+import { OnesieInnertubeResponse } from '../lib/protobuf/ump/onesieInnertubeResponse_pb'
 
 export class BrowseMessage extends YouTubeMessage {
   constructor (msgType: any = Browse, name: string = 'Browse') {
@@ -27,9 +29,44 @@ export class BrowseMessage extends YouTubeMessage {
         this.removeShorts(obj, i)
       }
     })
+    // this.addClientKey()
     // this.removeFrameworkUpdateAd()
     await this.translate()
     return this
+  }
+
+  addClientKey (): void {
+    if (!this.message.responseContext) {
+      return
+    }
+    this.message.responseContext.globalConfigGroup = new GlobalConfigGroup(
+      {
+        hotConfigGroup: {
+          mediaHotConfig: {
+            onesieHotConfig: {
+              clientKey: new Uint8Array([
+                  254, 182, 69, 182, 237, 221, 161, 115,
+                  72, 7, 88, 165, 188, 249, 44, 160,
+                  17, 94, 65, 219, 151, 209, 82, 6,
+                  152, 187, 188, 81, 52, 82, 181, 148
+                ]
+              ),
+              encryptKey: new Uint8Array([
+                  0, 170, 76, 193, 204, 43, 169, 7, 152, 73,
+                  130, 130, 80, 182, 25, 54, 93, 41, 16, 60,
+                  137, 32, 187, 146, 187, 223, 219, 5, 32, 147,
+                  28, 251, 20, 204, 93, 210, 255, 151, 129, 195,
+                  224, 84, 167, 162, 189, 76, 184, 133, 153, 16,
+                  164, 151, 71
+                ]
+              ),
+              keyExpiresInSeconds: 259200n,
+              useHotConfigToCreateOnesieRequest: true
+            }
+          }
+        }
+      })
+    this.needProcess = true
   }
 
   removeCommonAD (obj: any, index: number): void {

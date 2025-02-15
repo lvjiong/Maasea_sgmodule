@@ -42,6 +42,8 @@ jobs:
            git commit -m "gitAction auto upload Youtube 去广告脚本 $(date '+%Y-%m-%d') $(date +'%H:%M:%S')"
            git push
       working-directory: ./Script/Youtube
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       env:
         CI_BRANCH: ${{ github.ref_name }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

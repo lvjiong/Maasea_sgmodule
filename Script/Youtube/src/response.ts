@@ -179,8 +179,14 @@ export class PlayerMessage extends YouTubeMessage {
   }
 
   addTranslateCaption (): void {
-    const captionTargetLang = this.argument.captionLang as string
-    if (captionTargetLang === 'off') return
+    const captionTargetLang = this.argument.captionLang as stringArray
+    //console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
+    //for (let i = 0; i < captionTargetLang.length; i++) {     
+    // console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
+    //}
+    //return
+    let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
+    if (defaultLan === 'off') return
 
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
@@ -189,38 +195,54 @@ export class PlayerMessage extends YouTubeMessage {
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {
-          [captionTargetLang]: 2,
-          en: 1
+          [defaultLan]: 2,
+         // en: 1 //默认语言是en导致key重复，优先级仍为1
         }
+        //console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan)
+        //for (let key in captionPriority) {
+        //  if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
+         //     console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key])
+          //}
+        //}
         let priority = -1
         let targetIndex = 0
-
+        //查找视频自带字幕是否已支持目标字幕，支持的话后续仍使用视频自带字幕，否则使用Google翻译增强字幕
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
+          //console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
           }
           captionTrack.isTranslatable = true
         }
-
+        //验证添加多字幕成功，下一步考虑移除上面判断字幕优先级，强制添加自定义字幕，否则若原始视频就带多字幕并且与脚本指定字幕能匹配可能会存在异常
         if (priority !== 2) {
-          const newCaption = new CaptionTrack({
-            baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang}`,
-            name: { runs: [{ text: `@Enhance (${captionTargetLang})` }] },
-            vssId: `.${captionTargetLang}`,
-            languageCode: captionTargetLang
-          })
-          captionTracks.push(newCaption)
+          //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
+          targetIndex = captionTracks.length -1
+          //console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
+          for (let i = 0; i < captionTargetLang.length; i++) {
+            const newCaption = new CaptionTrack({
+              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
+              vssId: `.${captionTargetLang[i]}`,
+              languageCode: captionTargetLang[i]
+            })
+            captionTracks.push(newCaption)
+          }
         }
-
+        //console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
         // 开启默认字幕
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1
           for (const audioTrack of audioTracks) {
-            if (!audioTrack.captionTrackIndices?.includes(trackIndex)) {
-              audioTrack.captionTrackIndices.push(trackIndex)
+            if (priority!=2) {//priority!=2 说明新增了字幕
+              for (let i = targetIndex + 1; i < captionTracks.length; i++) {//把新增的字幕添加到音轨
+                if (!audioTrack.captionTrackIndices?.includes(i)) {
+                  audioTrack.captionTrackIndices.push(i)
+                }
+              }
             }
             audioTrack.defaultCaptionTrackIndex = trackIndex
             audioTrack.captionsInitialState = 3

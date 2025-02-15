@@ -1,6 +1,6 @@
-# Module for Surge
+# Module for Shadowrocket
 
-脚本基于 Surge 测试，其他客户端的兼容性不做保证。
+脚本基于 Shadowrocket 测试，其他客户端的兼容性不做保证。
 
 ## 目录
 
@@ -19,6 +19,7 @@
 - 增加 YouTube 字幕翻译 (Thanks @VirgilClyne)
 - 增加 YouTube (Music) 后台播放
 - 增加 YouTube Music 歌词翻译
+- 增加 YouTube 内嵌多个字幕翻译
 
 [<img src="./assets/button.svg" alt="一键安装"  height="35"/>](https://intradeus.github.io/http-protocol-redirector?r=surge:///install-module?url=https%3A%2F%2Fraw.githubusercontent.com%2FMaasea%2Fsgmodule%2Fmaster%2FYouTube.Enhance.sgmodule)
 

@@ -1,0 +1,48 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+  
+    - name: Switch Directory
+      run: cd ./Script/Youtube
+    - name: npm install_build
+      run: |
+           npm install
+           npm run build
+      working-directory: ./Script/Youtube
+    - name: git status
+      run: git status .
+    - name: upload build result
+      run: |
+           git config --global user.name "GitHub Actions"
+           git config --global user.email "actions@github.com"
+           git add dist/
+           git commit -m "gitAction auto upload Youtube 去广告脚本 $(date '+%Y-%m-%d') $(date +'%H:%M:%S')"
+           git push
+      working-directory: ./Script/Youtube
+      env:
+        CI_BRANCH: ${{ github.ref_name }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

@@ -1,0 +1,13 @@
+#!name=解除可莉访问限制
+#!desc=解除可莉访问限制，可使用浏览器访问https://kelee.one
+#!system=iOS,iPadOS,macOS
+#!system_version=15
+#!loon_version=3.2.4(787)
+#!icon=https://raw.githubusercontent.com/lvjiong/Maasea_sgmodule/master/kelee.jpg
+#!date=2024-11-28 02:07:31
+
+[Rewrite]
+^https?://kelee.one header-replace User-Agent StashCore/2.7.1\x20Stash/2.7.1\x20Clash/1.11.0
+
+[MitM]
+hostname=kelee.one

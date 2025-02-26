@@ -179,7 +179,7 @@ export class PlayerMessage extends YouTubeMessage {
   }
 
   addTranslateCaption (): void {
-    const debug = true
+    const debug = $.isDebug //通过传参开关debug
     let isLoon = false
     const captionTargetLang_org = this.argument.captionLang as string
     let captionTargetLang: string[]

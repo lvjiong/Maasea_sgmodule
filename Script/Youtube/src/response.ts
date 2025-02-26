@@ -183,11 +183,12 @@ export class PlayerMessage extends YouTubeMessage {
     if (debug) {
       console.log("111111111111111111111111111111111111111111111 Current Client is " + $.className)
     }
+    let captionTargetLang: string[];
     if ($.className.match("Loon")) {
       const captionTargetLang_org = this.argument.captionLang as string
-      let captionTargetLang = captionTargetLang_org.split('+');
+      captionTargetLang = captionTargetLang_org.split('+')
     } else {
-      const captionTargetLang = this.argument.captionLang as stringArray
+      captionTargetLang = this.argument.captionLang as string[]
     }
     if (debug) {
       console.log("8888888888888888888888888888888888888888888888 captionTargetLang_org:" + captionTargetLang_org)

@@ -179,10 +179,14 @@ export class PlayerMessage extends YouTubeMessage {
   }
 
   addTranslateCaption (): void {
-    const captionTargetLang = this.argument.captionLang as stringArray
-    console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
-    for (let i = 0; i < captionTargetLang.length; i++) {     
-     console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
+    const debug = true
+    //const captionTargetLang = this.argument.captionLang as stringArray
+    const captionTargetLang = this.argument.captionLang as string
+    if (debug) {
+      console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
+      for (let i = 0; i < captionTargetLang.length; i++) {     
+       console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
+      }
     }
     //return
     let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
@@ -198,19 +202,23 @@ export class PlayerMessage extends YouTubeMessage {
           [defaultLan]: 2,
          // en: 1 //默认语言是en导致key重复，优先级仍为1
         }
-        //console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan)
-        //for (let key in captionPriority) {
-        //  if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
-         //     console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key])
-          //}
-        //}
+        if (debug) {
+          console.log("66666666666666666666666666666666666666 defaultLan:" + defaultLan)
+          for (let key in captionPriority) {
+            if (captionPriority.hasOwnProperty(key)) { // 确保是对象自有属性
+                console.log("66666666666666666666666666666666666666 captionPriority:" + key + ': ' + captionPriority[key])
+            }
+          }
+        }
         let priority = -1
         let targetIndex = 0
         //查找视频自带字幕是否已支持目标字幕，支持的话后续仍使用视频自带字幕，否则使用Google翻译增强字幕
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          if (debug) {
+            console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          }
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
@@ -221,7 +229,9 @@ export class PlayerMessage extends YouTubeMessage {
         if (priority !== 2) {
           //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
           targetIndex = captionTracks.length -1
-          console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
+          if (debug) {
+            console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
+          }
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
               baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
@@ -232,7 +242,9 @@ export class PlayerMessage extends YouTubeMessage {
             captionTracks.push(newCaption)
           }
         }
-        console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
+        if (debug) {
+          console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
+        }
         // 开启默认字幕
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1

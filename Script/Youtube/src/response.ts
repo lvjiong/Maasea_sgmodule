@@ -248,9 +248,9 @@ export class PlayerMessage extends YouTubeMessage {
           }
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang={captionTargetLang[i]}`,
-              name: { runs: [{ text: `@Enhance ({captionTargetLang[i]})` }] },
-              vssId: `.{captionTargetLang[i]}`,
+              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
+              name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
+              vssId: `.${captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
             })
             captionTracks.push(newCaption)

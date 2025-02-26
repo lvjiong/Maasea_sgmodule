@@ -180,9 +180,12 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const debug = true
+    if (debug) {
+      console.log("111111111111111111111111111111111111111111111 Current Client is " + $.constructor.name)
+    }
     //const captionTargetLang = this.argument.captionLang as stringArray
     const captionTargetLang_org = this.argument.captionLang as string
-    let captionTargetLang = captionTargetLang_org.split(',');
+    let captionTargetLang = captionTargetLang_org.split('+');
     if (debug) {
       console.log("8888888888888888888888888888888888888888888888 captionTargetLang_org:" + captionTargetLang_org)
       console.log("8888888888888888888888888888888888888888888888 captionTargetLang:" + captionTargetLang + "length:" + captionTargetLang.length)
@@ -236,9 +239,9 @@ export class PlayerMessage extends YouTubeMessage {
           }
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
-              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
-              name: { runs: [{ text: `@Enhance (${captionTargetLang[i]})` }] },
-              vssId: `.${captionTargetLang[i]}`,
+              baseUrl: captionTracks[targetIndex].baseUrl + `&tlang={captionTargetLang[i]}`,
+              name: { runs: [{ text: `@Enhance ({captionTargetLang[i]})` }] },
+              vssId: `.{captionTargetLang[i]}`,
               languageCode: captionTargetLang[i]
             })
             captionTracks.push(newCaption)

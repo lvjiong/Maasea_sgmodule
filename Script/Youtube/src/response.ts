@@ -180,10 +180,10 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const captionTargetLang = this.argument.captionLang as stringArray
-    //console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
-    //for (let i = 0; i < captionTargetLang.length; i++) {     
-    // console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
-    //}
+    console.log("8888888888888888888888888888888888888888888888 :" + captionTargetLang.length)
+    for (let i = 0; i < captionTargetLang.length; i++) {     
+     console.log("Test captionTargetLang: " + i + " ->" + captionTargetLang[i])
+    }
     //return
     let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
     if (defaultLan === 'off') return
@@ -210,7 +210,7 @@ export class PlayerMessage extends YouTubeMessage {
         for (let i = 0; i < captionTracks.length; i++) {
           const captionTrack = captionTracks[i]
           const currentPriority = captionPriority[captionTrack.languageCode]
-          //console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
+          console.log("7777777777777777777777777777777777captionTracks :" + i + " languageCode:" + captionTrack.languageCode  + " currentPriority:" + currentPriority)
           if (currentPriority && (currentPriority > priority)) {
             priority = currentPriority
             targetIndex = i
@@ -221,7 +221,7 @@ export class PlayerMessage extends YouTubeMessage {
         if (priority !== 2) {
           //走到这里说明目标字幕不是视频自带字幕，targetIndex后续不会用到了
           targetIndex = captionTracks.length -1
-          //console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
+          console.log("99999999999999999999999999999999999 newtargetIndex =" + targetIndex + " org captionTracks.length=" + captionTracks.length)
           for (let i = 0; i < captionTargetLang.length; i++) {
             const newCaption = new CaptionTrack({
               baseUrl: captionTracks[targetIndex].baseUrl + `&tlang=${captionTargetLang[i]}`,
@@ -232,7 +232,7 @@ export class PlayerMessage extends YouTubeMessage {
             captionTracks.push(newCaption)
           }
         }
-        //console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
+        console.log("0000000000000000000000000000000000000000000captionTracks.length :" + captionTracks.length)
         // 开启默认字幕
         if (Array.isArray(audioTracks)) {
           const trackIndex = priority === 2 ? targetIndex : captionTracks.length - 1

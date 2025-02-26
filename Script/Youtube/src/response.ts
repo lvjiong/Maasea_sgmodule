@@ -180,12 +180,17 @@ export class PlayerMessage extends YouTubeMessage {
 
   addTranslateCaption (): void {
     const debug = true
-    if (debug) {
-      console.log("111111111111111111111111111111111111111111111 Current Client is " + $.className)
-    }
-    let captionTargetLang: string[];
+    const isLoon = false
+    const captionTargetLang_org = this.argument.captionLang as string
+    let captionTargetLang: string[]
+
     if ($.className.match("Loon")) {
-      const captionTargetLang_org = this.argument.captionLang as string
+      isLoon = true
+    }
+    if (debug) {
+      console.log("111111111111111111111111111111111111111111111 Current Client is " + $.className + " isLoon:" + isLoon)
+    }
+    if (isLoon) {
       captionTargetLang = captionTargetLang_org.split('+')
     } else {
       captionTargetLang = this.argument.captionLang as string[]

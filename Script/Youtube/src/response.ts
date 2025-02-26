@@ -193,7 +193,7 @@ export class PlayerMessage extends YouTubeMessage {
     if (isLoon) {
       captionTargetLang = captionTargetLang_org.split('+')
     } else {
-      captionTargetLang = captionTargetLang_org.split(',') //Surge and Shadowrocket:zh-Hant,en
+      captionTargetLang = captionTargetLang_org.toString().split(',') //Surge and Shadowrocket:zh-Hant,en
     }
     if (debug) {
       console.log("8888888888888888888888888888888888888888888888 captionTargetLang_org:" + captionTargetLang_org)

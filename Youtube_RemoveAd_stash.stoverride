@@ -8,6 +8,8 @@ http:
   mitm:
     - "*.googlevideo.com"
     - "youtubei.googleapis.com"
+  rewrite:
+    - ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
   script:
     - match: ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)
       name: YouTubequguanggao
@@ -16,9 +18,10 @@ http:
       binary-mode: true
       timeout: 10
       max-size: -1
-      argument: {"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
-  rewrite:
-    - ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
+      argument: |-
+
+{"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
+
 script-providers:
   YouTubequguanggao:
     url: https://raw.githubusercontent.com/lvjiong/Maasea_sgmodule/master/Script/Youtube/dist/youtube.response.preview.js

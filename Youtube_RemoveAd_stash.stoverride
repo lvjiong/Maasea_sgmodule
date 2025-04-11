@@ -16,8 +16,7 @@ http:
       binary-mode: true
       timeout: 10
       max-size: -1
-	  argument: |-
-        {"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
+      argument: {"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
   rewrite:
     - ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
 script-providers:

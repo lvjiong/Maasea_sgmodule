@@ -19,8 +19,7 @@ http:
       timeout: 10
       max-size: -1
       argument: |-
-
-{"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
+  {"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
 
 script-providers:
   YouTubequguanggao:

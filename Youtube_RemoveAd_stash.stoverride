@@ -1,0 +1,26 @@
+name: YouTube去广告(stash)
+desc: 支持pip，后台播放
+#!homepage=https://github.com/lvjiong/Maasea_sgmodule
+icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+arguments-desc: |-
+  - 屏蔽参数：[true, false] \n- 翻译参数：[语言代码, off] \n- 脚本引擎：[auto, jsc, webview]\n\n1. 语言代码遵循 Google Translate Languages Codes, 当填入 off 时关闭翻译\n2. 推荐使用 jsc 引擎，但你仍可以切换成 webview 体验 Surge 新特性\n3. 开启调试模式用于输出更多日志
+http:
+  mitm:
+    - "*.googlevideo.com"
+    - "youtubei.googleapis.com"
+  script:
+    - match: ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)
+      name: YouTubequguanggao
+      type: response
+      require-body: true
+      binary-mode: true
+      timeout: 10
+      max-size: -1
+	  argument: |-
+        {"lyricLang":"off","captionLang":"zh-Hans+en","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}
+  rewrite:
+    - ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
+script-providers:
+  YouTubequguanggao:
+    url: https://raw.githubusercontent.com/lvjiong/Maasea_sgmodule/master/Script/Youtube/dist/youtube.response.preview.js
+    interval: 86400

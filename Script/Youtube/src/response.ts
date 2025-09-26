@@ -21,6 +21,7 @@ export class BrowseMessage extends YouTubeMessage {
   }
 
   async pure (): Promise<YouTubeMessage> {
+    const debug = $.isDebug
     this.iterate(this.message, 'sectionListSupportedRenderers', (obj) => {
       for (let i = obj.sectionListSupportedRenderers.length - 1; i >= 0; i--) {
         this.removeCommonAD(obj, i)
@@ -28,6 +29,9 @@ export class BrowseMessage extends YouTubeMessage {
       }
     })
     // this.removeFrameworkUpdateAd()
+    if (debug) {
+      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT Call translate()")
+    }
     await this.translate()
     return this
   }

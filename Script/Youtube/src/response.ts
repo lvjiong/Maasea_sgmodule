@@ -69,6 +69,9 @@ export class BrowseMessage extends YouTubeMessage {
   async translate (): Promise<void> {
     const debug = $.isDebug
     const lyricTargetLang = this.argument.lyricLang?.trim()
+    if (debug) {
+      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate () Enter,lyricTargetLang: " + lyricTargetLang + " this.name: " + this.name + " Id: " + this.getBrowseId())
+    }
     if (!(this.name === 'Browse' && this.getBrowseId().startsWith('MPLYt')) || lyricTargetLang === 'off') return
     let lyric = ''
     let tempObj: any
@@ -79,9 +82,7 @@ export class BrowseMessage extends YouTubeMessage {
       flag = true
       stack.length = 0
     })
-    if (debug) {
-      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate Enter flag:" + flag)
-    }
+
     if (!flag) {
       this.iterate(this.message, 'description', (obj, stack) => {
         tempObj = obj.description.runs[0]
@@ -89,6 +90,9 @@ export class BrowseMessage extends YouTubeMessage {
         stack.length = 0
         flag = true
       })
+    }
+    if (debug) {
+      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate Enter flag:" + flag)
     }
     if (!flag) return
 

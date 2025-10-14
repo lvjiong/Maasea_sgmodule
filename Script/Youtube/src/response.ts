@@ -93,10 +93,10 @@ export class BrowseMessage extends YouTubeMessage {
         flag = true
       })
     }
+    this.setLyricFound(flag)
     if (debug) {
       console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate Enter flag:" + flag)
     }
-    YouTubeMessage.sharedLyricFound = flag
     if (!flag) return
 
     const origin = lyricTargetLang.split('-')[0]
@@ -167,6 +167,8 @@ export class PlayerMessage extends YouTubeMessage {
   }
 
   pure (): YouTubeMessage {
+    const debug = $.isDebug
+    let lyricFound = false
     // 去除广告
     if (this.message.adPlacements?.length) {
       this.message.adPlacements.length = 0
@@ -178,10 +180,11 @@ export class PlayerMessage extends YouTubeMessage {
     delete this.message?.playbackTracking?.pageadViewthroughconversion
     // 增加 premium 特性
     this.addPlayAbility()
+    lyricFound = this.isLyricFound()
     if (debug) {
-          console.log("00000000000000000000000000000000000000000 lyricFound:" + YouTubeMessage.sharedLyricFound)
+          console.log("00000000000000000000000000000000000000000 lyricFound:" + lyricFound)
     }
-    if(YouTubeMessage.sharedLyricFound) {
+    if(lyricFound) {
       this.addTranslateCaption()
     }
     this.needProcess = true

@@ -96,7 +96,7 @@ export class BrowseMessage extends YouTubeMessage {
     if (debug) {
       console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate Enter flag:" + flag)
     }
-    this.lyricFound = flag
+    YouTubeMessage.sharedLyricFound = flag
     if (!flag) return
 
     const origin = lyricTargetLang.split('-')[0]
@@ -179,9 +179,9 @@ export class PlayerMessage extends YouTubeMessage {
     // 增加 premium 特性
     this.addPlayAbility()
     if (debug) {
-          console.log("00000000000000000000000000000000000000000 lyricFound:" + this.lyricFound)
+          console.log("00000000000000000000000000000000000000000 lyricFound:" + YouTubeMessage.sharedLyricFound)
     }
-    if(this.lyricFound) {
+    if(YouTubeMessage.sharedLyricFound) {
       this.addTranslateCaption()
     }
     this.needProcess = true

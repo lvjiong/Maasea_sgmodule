@@ -82,7 +82,9 @@ export class BrowseMessage extends YouTubeMessage {
       flag = true
       stack.length = 0
     })
-
+    if (debug) {
+      console.log(JSON.stringify(this.message, null, 2))
+    }
     if (!flag) {
       this.iterate(this.message, 'description', (obj, stack) => {
         tempObj = obj.description.runs[0]

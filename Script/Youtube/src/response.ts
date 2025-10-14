@@ -228,13 +228,15 @@ export class PlayerMessage extends YouTubeMessage {
     //return
     let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
     if (defaultLan === 'off') return
-
+    if (debug) {
+          console.log("00000000000000000000000000000000000000000 lyricFound:" + this.lyricFound)
+    }
+    if(this.lyricFound === false) {
+      return
+    }
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
       const audioTracks = obj.audioTracks
-      if(this.lyricFound === false) {
-        return
-      }
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {

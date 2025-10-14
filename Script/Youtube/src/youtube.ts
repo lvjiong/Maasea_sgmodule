@@ -5,7 +5,7 @@ export abstract class YouTubeMessage {
   name: string
   needProcess: boolean
   needSave: boolean
-  lyricFound: boolean
+  static sharedLyricFound = false
   message: any
   version: string = '1.0'
   whiteNo: number[] = []

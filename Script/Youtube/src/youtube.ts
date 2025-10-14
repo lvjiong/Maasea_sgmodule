@@ -5,8 +5,8 @@ export abstract class YouTubeMessage {
   name: string
   needProcess: boolean
   needSave: boolean
-  static sharedLyricFound = false
   message: any
+  static sharedLyricFound = false
   version: string = '1.0'
   whiteNo: number[] = []
   blackNo: number[] = []
@@ -32,6 +32,15 @@ export abstract class YouTubeMessage {
     if (storedData?.version === this.version) {
       Object.assign(this, storedData)
     }
+  }
+// 修改静态变量
+  setLyricFound(value: boolean) {
+    (this.constructor as typeof YouTubeMessage).sharedLyricFound = value
+  }
+
+  // 读取静态变量
+  isLyricFound(): boolean {
+    return (this.constructor as typeof YouTubeMessage).sharedLyricFound
   }
 
   decodeArgument (): Record<string, any> {

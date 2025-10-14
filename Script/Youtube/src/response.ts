@@ -108,12 +108,18 @@ export class BrowseMessage extends YouTubeMessage {
       const isOrigin = data[2].includes(origin)
 
       if (tempObj.text) {
+        if (debug) {
+          console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate resp:200,tempObj.text:true")
+        }
         tempObj.text = data[0].map((item) => isOrigin ? item[0] : item[1] + item[0] || '').join('\r\n')
         this.iterate(this.message, 'footer', (ob, stack) => {
           ob.footer.runs[0].text += tips
           stack.length = 0
         })
       } else {
+        if (debug) {
+          console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate resp:200,tempObj.text:false")
+        }
         if (tempObj.runs.length <= data[0].length) {
           tempObj.runs.forEach((item, i) => {
             item.text = isOrigin ? data[0][i][0] : item.text + `\n${data[0][i][0] as string}`

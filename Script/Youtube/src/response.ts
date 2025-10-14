@@ -22,6 +22,7 @@ export class BrowseMessage extends YouTubeMessage {
 
   async pure (): Promise<YouTubeMessage> {
     const debug = $.isDebug
+    this.lyricFound = true
     this.iterate(this.message, 'sectionListSupportedRenderers', (obj) => {
       for (let i = obj.sectionListSupportedRenderers.length - 1; i >= 0; i--) {
         this.removeCommonAD(obj, i)
@@ -83,7 +84,7 @@ export class BrowseMessage extends YouTubeMessage {
       stack.length = 0
     })
     if (debug) {
-      console.log(JSON.stringify(this.message, null, 2))
+      //console.log(JSON.stringify(this.message, null, 2))
     }
     if (!flag) {
       this.iterate(this.message, 'description', (obj, stack) => {
@@ -96,6 +97,7 @@ export class BrowseMessage extends YouTubeMessage {
     if (debug) {
       console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate Enter flag:" + flag)
     }
+    this.lyricFound = flag
     if (!flag) return
 
     const origin = lyricTargetLang.split('-')[0]
@@ -177,7 +179,9 @@ export class PlayerMessage extends YouTubeMessage {
     delete this.message?.playbackTracking?.pageadViewthroughconversion
     // 增加 premium 特性
     this.addPlayAbility()
-    this.addTranslateCaption()
+    if(this.lyricFound) {
+      this.addTranslateCaption()
+    }
     this.needProcess = true
     return this
   }

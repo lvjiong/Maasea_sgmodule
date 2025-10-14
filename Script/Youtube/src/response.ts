@@ -22,7 +22,6 @@ export class BrowseMessage extends YouTubeMessage {
 
   async pure (): Promise<YouTubeMessage> {
     const debug = $.isDebug
-    this.lyricFound = true
     this.iterate(this.message, 'sectionListSupportedRenderers', (obj) => {
       for (let i = obj.sectionListSupportedRenderers.length - 1; i >= 0; i--) {
         this.removeCommonAD(obj, i)
@@ -179,8 +178,12 @@ export class PlayerMessage extends YouTubeMessage {
     delete this.message?.playbackTracking?.pageadViewthroughconversion
     // 增加 premium 特性
     this.addPlayAbility()
-    this.addTranslateCaption()
-
+    if (debug) {
+          console.log("00000000000000000000000000000000000000000 lyricFound:" + this.lyricFound)
+    }
+    if(this.lyricFound) {
+      this.addTranslateCaption()
+    }
     this.needProcess = true
     return this
   }
@@ -228,12 +231,7 @@ export class PlayerMessage extends YouTubeMessage {
     //return
     let defaultLan = captionTargetLang && captionTargetLang.length > 0 ? captionTargetLang[captionTargetLang.length - 1] : "zh-Hans"
     if (defaultLan === 'off') return
-    if (debug) {
-          console.log("00000000000000000000000000000000000000000 lyricFound:" + this.lyricFound)
-    }
-    if(this.lyricFound === false) {
-      return
-    }
+
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
       const audioTracks = obj.audioTracks

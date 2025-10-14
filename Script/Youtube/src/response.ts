@@ -179,9 +179,8 @@ export class PlayerMessage extends YouTubeMessage {
     delete this.message?.playbackTracking?.pageadViewthroughconversion
     // 增加 premium 特性
     this.addPlayAbility()
-    if(this.lyricFound) {
-      this.addTranslateCaption()
-    }
+    this.addTranslateCaption()
+
     this.needProcess = true
     return this
   }
@@ -233,7 +232,9 @@ export class PlayerMessage extends YouTubeMessage {
     this.iterate(this.message, 'captionTracks', (obj, stack) => {
       const captionTracks = obj.captionTracks
       const audioTracks = obj.audioTracks
-
+      if(this.lyricFound === false) {
+        return
+      }
       // 添加默认翻译语言
       if (Array.isArray(captionTracks)) {
         const captionPriority = {

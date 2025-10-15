@@ -72,7 +72,7 @@ export class BrowseMessage extends YouTubeMessage {
     if (debug) {
       console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT translate () Enter,lyricTargetLang: " + lyricTargetLang + " this.name: " + this.name + " Id: " + this.getBrowseId())
     }
-    if (/*!(this.name === 'Browse' && (this.getBrowseId().startsWith('MPLYt') || this.getBrowseId().startsWith('FEwhat'))) || */lyricTargetLang === 'off') return
+    if (!(this.name === 'Browse' /*&& (this.getBrowseId().startsWith('MPLYt') || this.getBrowseId().startsWith('FEwhat'))*/) || lyricTargetLang === 'off') return
     let lyric = ''
     let tempObj: any
     let flag = false
@@ -83,7 +83,7 @@ export class BrowseMessage extends YouTubeMessage {
       stack.length = 0
     })
     if (debug) {
-      //console.log(JSON.stringify(this.message, null, 2))
+      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT this.message = " + JSON.stringify(this.message, null, 2))
     }
     if (!flag) {
       this.iterate(this.message, 'description', (obj, stack) => {

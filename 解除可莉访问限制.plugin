@@ -7,7 +7,7 @@
 #!date=2024-11-28 02:07:31
 
 [Rewrite]
-^https?://kelee.one header-replace User-Agent Loon/904 CFNetwork/3826.500.131 Darwin/24.5.0
+^https?://kelee.one header-replace User-Agent Loon/904\ CFNetwork\/3826.500.131\ Darwin\/24.5.0
 
 [MitM]
 hostname=kelee.one

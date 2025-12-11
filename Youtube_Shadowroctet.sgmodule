@@ -7,7 +7,7 @@
 # Youtube 画中画和后台播放可在客户端内关闭
 #   - 设置 -> 播放 -> 画中画
 #   - 设置 -> 后台播放和下载 -> 后台播放
-
+# 目前因Google字幕问题失效，此版本已添加判断解析字幕是否正常逻辑，只有解析正常才会开启字幕，避免弹出加载字幕错误消息
 
 [Rule]
 AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT

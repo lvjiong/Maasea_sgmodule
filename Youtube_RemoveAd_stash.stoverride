@@ -8,7 +8,7 @@ http:
   mitm:
     - "*.googlevideo.com"
     - "youtubei.googleapis.com"
-  rewrite:
+  url-rewrite:
     - ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-200
   script:
     - match: ^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)
